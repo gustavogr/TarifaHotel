@@ -20,20 +20,25 @@ class Tarifa(object):
 
 def calcularPrecio(Inicio, Fin, Tarifas):
 	if not(isinstance(Inicio,datetime.datetime)):
-		raise ValueError('Argumento Inicio debe ser objecto datetime.')
+		raise TypeError('Argumento Inicio debe ser objeto datetime.')
 	if not(isinstance(Fin,datetime.datetime)):
-		raise ValueError('Argumento Fin debe ser objecto datetime.')
+		raise TypeError('Argumento Fin debe ser objeto datetime.')
 	if not(isinstance(Tarifas,Tarifa)):
-		raise ValueError('Argumento Tarifas debe ser objecto Tarifa.')
-	print(Inicio,Fin,Tarifas)
+		raise TypeError('Argumento Tarifas debe ser objeto Tarifa.')
 	delta = Fin - Inicio
-	print(type(delta),delta)
-
+	horas = int(delta.total_seconds()//3600)
+	minutos = int(delta.total_seconds()%3600//60)
+	if Inicio > Fin:
+		raise ValueError('La fecha de inicio debe ser menor a la fecha final.')
+	if horas > 72 or (horas == 72 and minutos > 0):
+		raise ValueError('La reserva debe ser menor o igual a 72 horas.')
+	if horas < 0 or (horas == 0 and minutos < 15):
+		raise ValueError('La reserva debe ser mayor o igual a 15 minutos.')
 
 
 
 if __name__ == '__main__':
-	ini = datetime.datetime(2015,11,4,16,59)
-	fin = datetime.datetime(2015,11,2,17,13)
+	ini = datetime.datetime(2015,11,2,17)
+	fin = datetime.datetime(2015,11,5,17,1)
 	t = Tarifa(50,60)
-	calcularPrecio(ini,fin,t)
+	calcularPrecio(fin,ini,t)
