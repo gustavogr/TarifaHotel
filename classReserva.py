@@ -20,9 +20,9 @@ class Tarifa(object):
 
 
 def cualTarifa(hora,minuto):
-	if 6 < hora and hora < 18:
-		return 'dia'
-	elif (hora == 6 and minuto > 0) or (hora == 18 and minuto == 0):
+	if (hora == 6 or hora == 18) and minuto == 0:
+		return ''
+	elif 6 <= hora and hora < 18:
 		return 'dia'
 	else:	
 		return 'noche'
@@ -46,12 +46,11 @@ def calcularPrecio(inicio, fin, tarifas):
 		raise ValueError('La reserva debe ser mayor o igual a 15 minutos.')
 	if tarifas.dia <= 0 or tarifas.noche <= 0:
 		raise ValueError('Las tarifas deben ser positivas.')
-
 	hActual = inicio.hour
 	mActual = inicio.minute
 	suma = 0
 	tAnt = cualTarifa(hActual,mActual)
-	while horas > 0 or (horas = 0 and minutos > 0):
+	while horas > 0 or (horas == 0 and minutos > 0):
 		if horas == 0:
 			if (mActual + minutos) % 60 < mActual:
 				hActual += 1
@@ -63,14 +62,18 @@ def calcularPrecio(inicio, fin, tarifas):
 			hActual += 1
 			horas -= 1
 		tActual = cualTarifa(hActual,mActual)
-		if tActual != tAnt:
+		if tActual == tAnt or tActual == '':
+			suma += getattr(tarifas,tAnt)
+		elif tAnt == '':
+			suma += getattr(tarifas,tActual)
+		else:
 			suma += max(tarifas.dia,tarifas.noche)
 			tAnt == tActual
-
+	return suma
 
 
 if __name__ == '__main__':
-	ini = datetime.datetime(2015,11,2,17)
-	fin = datetime.datetime(2015,11,5,17,1)
+	ini = datetime.datetime(2015,11,2,17,15)
+	fin = datetime.datetime(2015,11,2,18,15)
 	t = Tarifa(50,60)
-	calcularPrecio(fin,ini,t)
+	print(calcularPrecio(ini,fin,t))
