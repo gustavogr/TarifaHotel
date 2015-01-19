@@ -7,16 +7,17 @@ Autores: Gustavo Gutierrez 11-10428
          
 '''
 import datetime
+from decimal import *
 
 class Tarifa(object):
 	"""Objeto que maneja las tarifas de dia y de noche de una reserva"""
 	def __init__(self, tarifaDia, tarifaNoche):
 		super(Tarifa, self).__init__()
-		self.dia = tarifaDia
-		self.noche = tarifaNoche
+		self.dia = Decimal(tarifaDia)
+		self.noche = Decimal(tarifaNoche)
 	def __str__(self):
 		return 'Dia: '+str(self.dia)+' Noche: '+str(self.noche)
-	
+
 
 def calcularPrecio(Inicio, Fin, Tarifas):
 	if not(isinstance(Inicio,datetime.datetime)):
