@@ -7,14 +7,14 @@ Autores: Gustavo Gutierrez 11-10428
          
 '''
 import datetime
-from decimal import *
+import decimal
 
 class Tarifa(object):
 	"""Objeto que maneja las tarifas de dia y de noche de una reserva"""
 	def __init__(self, tarifaDia, tarifaNoche):
 		super(Tarifa, self).__init__()
-		self.dia = Decimal(tarifaDia)
-		self.noche = Decimal(tarifaNoche)
+		self.dia = decimal.Decimal(tarifaDia)
+		self.noche = decimal.Decimal(tarifaNoche)
 	def __str__(self):
 		return 'Dia: '+str(self.dia)+' Noche: '+str(self.noche)
 
@@ -53,13 +53,13 @@ def calcularPrecio(inicio, fin, tarifas):
 	while horas > 0 or (horas == 0 and minutos > 0):
 		if horas == 0:
 			if (mActual + minutos) % 60 < mActual:
-				hActual += 1
+				hActual = (hActual + 1) % 24 
 				mActual = (mActual + minutos) % 60
 			else:
 				mActual = mActual + minutos
 				minutos = 0
 		else:
-			hActual += 1
+			hActual = (hActual + 1) % 24
 			horas -= 1
 		tActual = cualTarifa(hActual,mActual)
 		if tActual == tAnt or tActual == '':
@@ -68,12 +68,12 @@ def calcularPrecio(inicio, fin, tarifas):
 			suma += getattr(tarifas,tActual)
 		else:
 			suma += max(tarifas.dia,tarifas.noche)
-			tAnt == tActual
+		tAnt = tActual
 	return suma
 
 
 if __name__ == '__main__':
-	ini = datetime.datetime(2015,11,2,17,15)
-	fin = datetime.datetime(2015,11,2,18,15)
+	ini = datetime.datetime(2015,11,2)
+	fin = datetime.datetime(2015,11,3)
 	t = Tarifa(50,60)
 	print(calcularPrecio(ini,fin,t))
