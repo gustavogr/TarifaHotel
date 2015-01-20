@@ -12,7 +12,6 @@ import decimal
 class Tarifa(object):
 	"""Objeto que maneja las tarifas de dia y de noche de una reserva"""
 	def __init__(self, tarifaDia, tarifaNoche):
-		super(Tarifa, self).__init__()
 		self.dia = decimal.Decimal(tarifaDia)
 		self.noche = decimal.Decimal(tarifaNoche)
 	def __str__(self):
@@ -57,7 +56,7 @@ def calcularPrecio(inicio, fin, tarifas):
 				mActual = (mActual + minutos) % 60
 			else:
 				mActual = mActual + minutos
-				minutos = 0
+			minutos = 0
 		else:
 			hActual = (hActual + 1) % 24
 			horas -= 1
@@ -73,7 +72,7 @@ def calcularPrecio(inicio, fin, tarifas):
 
 
 if __name__ == '__main__':
-	ini = datetime.datetime(2015,11,2)
-	fin = datetime.datetime(2015,11,3)
+	ini = datetime.datetime(2015,1,19,18,1)
+	fin = datetime.datetime(2015,1,20,0,0)
 	t = Tarifa(50,60)
 	print(calcularPrecio(ini,fin,t))
