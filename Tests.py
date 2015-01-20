@@ -29,6 +29,23 @@ class TestCalcularPrecio(unittest.TestCase):
         self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,0,0),
                                         datetime.datetime(2015,1,19,5,59),
                                         Tarifa(50,60)), 360)
+    # Casos con uso de las dos tarifas (hibridos)
+    def testLimiteInferiorDiurnaANocturna(self):
+        self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,6,1),
+                                        datetime.datetime(2015,1,19,18,50),
+                                        Tarifa(10,20)), 150)
+    def testLimiteSuperiorDiurnaANocturna(self):
+        self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,17,59),
+                                        datetime.datetime(2015,1,20,7,59),
+                                        Tarifa(10,20)), 270)
+    def testLimiteInferiorNocturnaADiaria(self):
+        self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,18,1),
+                                        datetime.datetime(2015,1,20,7,19),
+                                        Tarifa(10,20)), 260)
+    def testLimiteSuperiorNocturnaADiaria(self):
+        self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,5,59),
+                                        datetime.datetime(2015,1,19,16,47),
+                                        Tarifa(10,20)), 120)
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
