@@ -36,7 +36,12 @@ class TestCalcularPrecio(unittest.TestCase):
     def testFronteraInferiorNocturna(self):
     	self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,18,0),
     									datetime.datetime(2015,1,19,19,0),
-    									Tarifa(50,70)), 50)    
+    									Tarifa(70,50)), 50)
+
+    def testFronteraSuperiorNocturna(self):
+    	self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,5,0),
+    									datetime.datetime(2015,1,19,6,0),
+    									Tarifa(70,50)), 50)    
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
