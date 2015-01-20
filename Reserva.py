@@ -72,7 +72,35 @@ def calcularPrecio(inicio, fin, tarifas):
 
 
 if __name__ == '__main__':
-	ini = datetime.datetime(2015,1,19,18,1)
-	fin = datetime.datetime(2015,1,20,0,0)
-	t = Tarifa(50,60)
+	try:	
+		anioi = int(input('Introduzca anyo de inicio de la reserva: '))
+		mesi = int(input('Introduzca mes de inicio de la reserva: '))
+		diai = int(input('Introduzca dia de inicio de la reserva: '))
+		horai = int(input('Introduzca hora de inicio de la reserva: '))
+		minutoi = int(input('Introduzca los minutos de la hora de inicio de la reserva: '))
+		aniof = int(input('Introduzca anyo final de la reserva: '))
+		mesf = int(input('Introduzca mes final de la reserva: '))
+		diaf = int(input('Introduzca dia final de la reserva: '))
+		horaf = int(input('Introduzca hora final de la reserva: '))
+		minutof = int(input('Introduzca minuto final de la reserva: '))
+		dia = int(input('Introduzca la tarifa diurna: '))
+		noche = int(input('Introduzca la tarifa nocturna: '))
+		t = Tarifa(dia,noche)
+	except ValueError:
+		print('El valor debe ser un entero.')
+		raise SystemExit
+	try:
+		ini = datetime.datetime(anioi,mesi,diai,horai,minutoi)
+	except ValueError as err:
+		print('Error creando objeto datetime "inicio": ',err)
+		raise SystemExit
+	try:	
+		fin = datetime.datetime(aniof,mesf,diaf,horaf,minutof)
+	except ValueError as err:
+		print('Error creando objeto datetime "fin": ',err)
+		raise SystemExit
+
+
 	print(calcularPrecio(ini,fin,t))
+
+
