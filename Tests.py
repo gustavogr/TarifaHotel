@@ -1,8 +1,8 @@
 '''
 Created on 19/01/2015
 
-@authors:     Genessis Sanchez
-              Gustavo Gutierrez
+@authors:     Genessis Sanchez 11-10935
+              Gustavo Gutierrez 11-10428
 '''
 import unittest
 from Reserva import *
