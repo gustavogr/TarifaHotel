@@ -23,12 +23,15 @@ class TestCalcularPrecio(unittest.TestCase):
 
     # Casos unica tarifa tocando las fronteras
 
-    def testFronteraSuperiorDiariaConNocturna(self):
+    def testFronteraSuperiorDiaria(self):
     	self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,17,0),
     									datetime.datetime(2015,1,19,18,0),
     									Tarifa(50,70)), 50)
 
-
+    def testFronteraInferiorDiaria(self):
+    	self.assertEqual(calcularPrecio(datetime.datetime(2015,1,19,6,0),
+    									datetime.datetime(2015,1,19,7,0),
+    									Tarifa(50,70)), 50)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
