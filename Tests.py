@@ -46,13 +46,29 @@ class TestCalcularPrecio(unittest.TestCase):
 
     # Validacion de entrada
 
+    def testFechasInvalidas(self):
+    	self.assertRaises(ValueError, calcularPrecio, 
+    									 datetime.datetime(2015,1,20,12,0),
+    									 datetime.datetime(2015,1,19,12,0),
+    									 Tarifa(50,60))
+
     def testTiempoReservaMinimo(self):
     	self.assertRaises(ValueError, calcularPrecio, 
     									 datetime.datetime(2015,1,19,12,0),
     									 datetime.datetime(2015,1,19,12,1),
     									 Tarifa(50,60))
 
+    def testTiempoReservaMaximo(self):
+    	self.assertRaises(ValueError, calcularPrecio, 
+    									 datetime.datetime(2015,1,19,12,0),
+    									 datetime.datetime(2015,1,22,12,1),
+    									 Tarifa(50,60))
 
+    def testTarifasInvalidas(self):
+    	self.assertRaises(ValueError, calcularPrecio, 
+    									 datetime.datetime(2015,1,19,12,0),
+    									 datetime.datetime(2015,1,19,12,20),
+    									 Tarifa(-50,60))
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
