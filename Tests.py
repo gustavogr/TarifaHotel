@@ -43,6 +43,16 @@ class TestCalcularPrecio(unittest.TestCase):
     									datetime.datetime(2015,1,19,6,0),
     									Tarifa(70,50)), 50)    
 
+
+    # Validacion de entrada
+
+    def testTiempoReservaMinimo(self):
+    	self.assertRaises(ValueError, calcularPrecio, 
+    									 datetime.datetime(2015,1,19,12,0),
+    									 datetime.datetime(2015,1,19,12,1),
+    									 Tarifa(50,60))
+
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
